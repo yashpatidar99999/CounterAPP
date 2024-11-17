@@ -1,25 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useReducer } from 'react';
 
-function App() {
+// Initial state for the counter
+const initialState = {
+  count: 0,
+};
+
+// Reducer function to handle INCREMENT and DECREMENT actions
+const counterReducer = (state, action) => {
+  switch (action.type) {
+    case 'INCREMENT':
+      return { count: state.count + 1 };
+    case 'DECREMENT':
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+};
+
+const CounterApp = () => {
+  // Use useReducer to manage the counter state
+  const [state, dispatch] = useReducer(counterReducer, initialState);
+
+  // Functions to dispatch INCREMENT and DECREMENT actions
+  const increment = () => {
+    dispatch({ type: 'INCREMENT' });
+  };
+
+  const decrement = () => {
+    dispatch({ type: 'DECREMENT' });
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Counter Application</h1>
+      <p>Current Count: {state.count}</p>
+      <button onClick={increment}>Increment</button>
+      <button onClick={decrement}>Decrement</button>
     </div>
   );
-}
+};
 
-export default App;
+export default CounterApp;
